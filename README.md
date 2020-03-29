@@ -5,7 +5,7 @@ Boilerplate for API backends with Node.js and Express.
 
 ### Overview
 
-You can customize the `src` and `api` directories.
+Project `src` structure directories.
 
 ```
 src/
