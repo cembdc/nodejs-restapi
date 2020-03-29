@@ -29,8 +29,8 @@ src/
 ├─ utils/
 │  ├─ requestUtil.js
 │  ├─ utils.index.js
-├─ test/
-│  ├─ example.test.js
-│  ├─ userController.test.js
+test/
+├─ example.test.js
+├─ userController.test.js
 └─
 ```
