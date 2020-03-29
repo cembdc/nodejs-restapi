@@ -4,7 +4,7 @@
 	"main": "server/server.js",
 	"scripts": {
 		"start": "src/server.js",
-		"pretest": "jshint ."
+		"test": "mocha --timeout 10000npm "
 	},
 	"dependencies": {
 		"app-root-path": "^2.2.1",
@@ -26,6 +26,8 @@
 	},
 	"description": "Boilerplate server side source code",
 	"devDependencies": {
+		"chai": "^4.2.0",
+		"chai-http": "^4.3.0",
 		"eslint": "^6.1.0",
 		"eslint-config-airbnb": "^18.0.1",
 		"eslint-config-prettier": "^6.5.0",
@@ -34,6 +36,8 @@
 		"eslint-plugin-prettier": "^3.1.1",
 		"eslint-plugin-react": "^7.14.3",
 		"eslint-plugin-react-hooks": "^1.7.0",
-		"prettier": "^1.18.2"
+		"mocha": "^7.1.1",
+		"prettier": "^1.18.2",
+		"request": "^2.88.2"
 	}
 }

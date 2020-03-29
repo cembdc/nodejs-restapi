@@ -11,6 +11,7 @@
 		"no-useless-catch": "off",
 		"no-plusplus": "off",
 		"func-names": "off",
-		"no-console": "off"
+		"no-console": "off",
+		"no-undef": "off"
 	}
 }
