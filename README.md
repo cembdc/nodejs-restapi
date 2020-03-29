@@ -1,4 +1,5 @@
 # Nodejs-Restapi-Boilerplate
+
 Boilerplate for API backends with Node.js and Express.
 
 ## Directory structure
@@ -28,5 +29,8 @@ src/
 ├─ utils/
 │  ├─ requestUtil.js
 │  ├─ utils.index.js
+├─ test/
+│  ├─ example.test.js
+│  ├─ userController.test.js
 └─
 ```
