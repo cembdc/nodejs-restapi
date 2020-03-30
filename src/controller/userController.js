@@ -1,10 +1,8 @@
-exports.usertest = async (req, res) => {
-	const data = {
-		fullName: 'Cem',
-		email: 'Bdc',
-		lang: 'tr',
-		gmt: '+3'
-	};
+const Status = require('http-status');
+const { userService } = require('../service/service.index');
+
+exports.getAllUsers = async (req, res) => {
+	const users = await userService.getAllUsers();
 
 	res.status(200).send(data);
 };
@@ -16,5 +14,5 @@ exports.register = async (req, res) => {
 		confirmPassword: req.body.confirmPassword
 	};
 
-	res.status(200).send(data);
+	res.status(Status.OK).send(data);
 };
