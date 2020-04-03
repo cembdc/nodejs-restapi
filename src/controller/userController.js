@@ -1,18 +1,26 @@
 const Status = require('http-status');
 const { userService } = require('../service/service.index');
 
-exports.getAllUsers = async (req, res) => {
-	const users = await userService.getAllUsers();
+exports.getAllUsers = async (req, res, next) => {
+	try {
+		const result = await userService.getAllUsers();
 
-	res.status(200).send(data);
-};
+		res.apiResponse = {
+			status: Status.OK,
+			success: result.success,
+			error: result.error,
+			data: result.data,
+			message: 'Succesfull'
+		};
+	} catch (error) {
+		res.apiResponse = {
+			status: Status.BAD_REQUEST,
+			success: false,
+			error: error.message,
+			data: null,
+			message: 'Error'
+		};
+	}
 
-exports.register = async (req, res) => {
-	const data = {
-		email: req.body.email,
-		password: req.body.password,
-		confirmPassword: req.body.confirmPassword
-	};
-
-	res.status(Status.OK).send(data);
+	next();
 };

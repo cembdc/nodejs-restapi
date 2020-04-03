@@ -1,13 +1,13 @@
 const { body, param } = require('express-validator');
 const { userController } = require('../controller/controller.index');
 const { requestUtil } = require('../utils/utils.index');
-const { validator } = require('../middlewares/middlewares.index');
+const { validator, apiResponse } = require('../middlewares/middlewares.index');
 
 exports.assignRoutes = app => {
 	/**
 	 * Get All Users
 	 */
-	app.get(requestUtil.getUrlPrefix('user'), userController.getAllUsers);
+	app.get(requestUtil.getUrlPrefix('user'), userController.getAllUsers, apiResponse.send);
 
 	/**
 	 * Get User
