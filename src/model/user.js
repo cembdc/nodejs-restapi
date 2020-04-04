@@ -29,7 +29,7 @@ const UserSchema = new Schema({
 			stateEnums.UserState.PASSIVE,
 			stateEnums.UserState.SUSPEND
 		],
-		default: UserState.NOT_VERIFIED
+		default: stateEnums.UserState.NOT_VERIFIED
 	},
 	createdDateTime: {
 		type: Date,
@@ -41,7 +41,7 @@ const UserSchema = new Schema({
 	}
 });
 
-UserSchema.pre('save', next => {
+UserSchema.pre('save', function(next) {
 	const user = this;
 	if ((this.isModified('password') || this.isNew) && user.password) {
 		const hash = cryptUtil.encode(user.password);

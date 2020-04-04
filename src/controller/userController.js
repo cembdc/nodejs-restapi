@@ -27,7 +27,8 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
 	try {
-		const result = await userService.createUser();
+		const { userName, email, password } = req.body;
+		const result = await userService.createUser({ userName, email, password });
 
 		res.apiResponse = {
 			status: Status.OK,

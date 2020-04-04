@@ -25,9 +25,9 @@ exports.getAllUsers = async () => {
  * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
  * {success: false, error: any} or {success: true}
  */
-exports.createUser = async () => {
+exports.createUser = async user => {
 	try {
-		await userRepository.createUser();
+		await userRepository.createUser(user);
 
 		return { success: true };
 	} catch (error) {

@@ -1,5 +1,5 @@
 exports.send = (req, res) => {
-	const { status, success, error, data, message } = req.apiResponse;
+	const { status, success, error, data, message } = res.apiResponse;
 
 	return res.status(status).json({
 		success,

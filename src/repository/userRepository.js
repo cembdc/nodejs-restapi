@@ -21,7 +21,8 @@ exports.getAllUsers = async () => {
  */
 exports.createUser = async user => {
 	try {
-		return User.save(new User(user));
+		const userModel = new User(user);
+		return userModel.save();
 	} catch (error) {
 		throw error;
 	}

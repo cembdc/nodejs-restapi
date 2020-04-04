@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const config = require('../config/config');
+const { config } = require('../config/config');
 
 const encode = data => {
 	const cipher = crypto.createCipher('aes-256-cbc', config.token_config.secret);

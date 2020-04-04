@@ -12,52 +12,53 @@ exports.assignRoutes = app => {
 	/**
 	 * Get User
 	 */
-	app.get(
-		requestUtil.getUrlPrefix('user/:id'),
-		[
-			param('id')
-				.exists()
-				.withMessage('Id is required')
-		],
-		validator.validate,
-		userController.getUser
-	);
+	// app.get(
+	// 	requestUtil.getUrlPrefix('user/:id'),
+	// 	[
+	// 		param('id')
+	// 			.exists()
+	// 			.withMessage('Id is required')
+	// 	],
+	// 	validator.validate,
+	// 	userController.getUser,
+	// 	apiResponse.send
+	// );
 
 	/**
 	 * Update User
 	 */
-	app.put(
-		requestUtil.getUrlPrefix('user/:id'),
-		[
-			param('id')
-				.exists()
-				.withMessage('Id is required'),
-			body('username')
-				.exists()
-				.isLength({ min: 5, max: 10 })
-				.withMessage('username is not valid.(min: 5, max: 10)'),
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('email is not valid an email')
-		],
-		validator.validate,
-		userController.updateUser
-	);
+	// app.put(
+	// 	requestUtil.getUrlPrefix('user/:id'),
+	// 	[
+	// 		param('id')
+	// 			.exists()
+	// 			.withMessage('Id is required'),
+	// 		body('userName')
+	// 			.exists()
+	// 			.isLength({ min: 5, max: 10 })
+	// 			.withMessage('userName is not valid.(min: 5, max: 10)'),
+	// 		body('email')
+	// 			.exists()
+	// 			.isEmail()
+	// 			.withMessage('email is not valid an email')
+	// 	],
+	// 	validator.validate,
+	// 	userController.updateUser
+	// );
 
 	/**
 	 * Delete User
 	 */
-	app.delete(
-		requestUtil.getUrlPrefix('user/:id'),
-		[
-			param('id')
-				.exists()
-				.withMessage('Id is required')
-		],
-		validator.validate,
-		userController.deleteUser
-	);
+	// app.delete(
+	// 	requestUtil.getUrlPrefix('user/:id'),
+	// 	[
+	// 		param('id')
+	// 			.exists()
+	// 			.withMessage('Id is required')
+	// 	],
+	// 	validator.validate,
+	// 	userController.deleteUser
+	// );
 
 	/**
 	 * Create User
@@ -65,10 +66,10 @@ exports.assignRoutes = app => {
 	app.post(
 		requestUtil.getUrlPrefix('user'),
 		[
-			body('username')
+			body('userName')
 				.exists()
 				.isLength({ min: 5, max: 10 })
-				.withMessage('username is not valid.(min: 5, max: 10)'),
+				.withMessage('userName is not valid.(min: 5, max: 10)'),
 			body('email')
 				.exists()
 				.isEmail()
