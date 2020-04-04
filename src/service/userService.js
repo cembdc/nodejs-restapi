@@ -15,3 +15,22 @@ exports.getAllUsers = async () => {
 		throw { success: false, error: any };
 	}
 };
+
+/**
+/**
+ * @description Create User
+ * @param user {object} Object containing all required fields to
+ * create user
+ *
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
+ */
+exports.createUser = async () => {
+	try {
+		await userRepository.createUser();
+
+		return { success: true };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};

@@ -24,3 +24,27 @@ exports.getAllUsers = async (req, res, next) => {
 
 	next();
 };
+
+exports.createUser = async (req, res, next) => {
+	try {
+		const result = await userService.createUser();
+
+		res.apiResponse = {
+			status: Status.OK,
+			success: result.success,
+			error: result.error,
+			data: result.data,
+			message: 'Succesfull'
+		};
+	} catch (error) {
+		res.apiResponse = {
+			status: Status.BAD_REQUEST,
+			success: false,
+			error: error.message,
+			data: null,
+			message: 'Error'
+		};
+	}
+
+	next();
+};

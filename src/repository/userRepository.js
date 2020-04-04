@@ -15,9 +15,14 @@ exports.getAllUsers = async () => {
 };
 
 /**
- * @description Attempt to create a post with the provided object
- * @param postToCreate {object} Object containing all required fields to
- * create post
- * @returns {Promise<{success: boolean, error: *}|{success: boolean, body: *}>}
+ * @description Create User
+ * @param user {object} Object containing all required fields to
+ * create user
  */
-// exports.getAllUsers = async () => User.find();
+exports.createUser = async user => {
+	try {
+		return User.save(new User(user));
+	} catch (error) {
+		throw error;
+	}
+};

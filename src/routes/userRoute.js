@@ -83,6 +83,7 @@ exports.assignRoutes = app => {
 				.withMessage('passwords are not the same')
 		],
 		validator.validate,
-		userController.createUser
+		userController.createUser,
+		apiResponse.send
 	);
 };
