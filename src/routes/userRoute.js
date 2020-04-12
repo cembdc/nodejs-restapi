@@ -12,39 +12,41 @@ exports.assignRoutes = app => {
 	/**
 	 * Get User
 	 */
-	// app.get(
-	// 	requestUtil.getUrlPrefix('user/:id'),
-	// 	[
-	// 		param('id')
-	// 			.exists()
-	// 			.withMessage('Id is required')
-	// 	],
-	// 	validator.validate,
-	// 	userController.getUser,
-	// 	apiResponse.send
-	// );
+	app.get(
+		requestUtil.getUrlPrefix('user/:id'),
+		[
+			param('id')
+				.exists()
+				.custom(value => value.match(/^[0-9a-fA-F]{24}$/) != null)
+				.withMessage('Id is required')
+		],
+		validator.validate,
+		userController.getUser,
+		apiResponse.send
+	);
 
 	/**
 	 * Update User
 	 */
-	// app.put(
-	// 	requestUtil.getUrlPrefix('user/:id'),
-	// 	[
-	// 		param('id')
-	// 			.exists()
-	// 			.withMessage('Id is required'),
-	// 		body('userName')
-	// 			.exists()
-	// 			.isLength({ min: 5, max: 10 })
-	// 			.withMessage('userName is not valid.(min: 5, max: 10)'),
-	// 		body('email')
-	// 			.exists()
-	// 			.isEmail()
-	// 			.withMessage('email is not valid an email')
-	// 	],
-	// 	validator.validate,
-	// 	userController.updateUser
-	// );
+	app.put(
+		requestUtil.getUrlPrefix('user/:id'),
+		[
+			param('id')
+				.exists()
+				.custom(value => value.match(/^[0-9a-fA-F]{24}$/) != null)
+				.withMessage('Id is required'),
+			body('userName')
+				.exists()
+				.isLength({ min: 5, max: 10 })
+				.withMessage('userName is not valid.(min: 5, max: 10)'),
+			body('email')
+				.exists()
+				.isEmail()
+				.withMessage('email is not valid an email')
+		],
+		validator.validate,
+		userController.updateUser
+	);
 
 	/**
 	 * Delete User
@@ -54,6 +56,7 @@ exports.assignRoutes = app => {
 	// 	[
 	// 		param('id')
 	// 			.exists()
+	//			.custom((value) => value.match(/^[0-9a-fA-F]{24}$/) != null)
 	// 			.withMessage('Id is required')
 	// 	],
 	// 	validator.validate,

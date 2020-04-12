@@ -17,6 +17,21 @@ exports.getAllUsers = async () => {
 };
 
 /**
+ * @description Gets user by id
+ * @param id {property} User Id
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean, data: user}>}
+ * {success: false, error: any} or {success: true, data: {user}}
+ */
+exports.getUser = async id => {
+	try {
+		const user = await userRepository.getUser(id);
+
+		return { success: true, data: user };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};
+
 /**
  * @description Create User
  * @param user {object} Object containing all required fields to
@@ -28,6 +43,24 @@ exports.getAllUsers = async () => {
 exports.createUser = async user => {
 	try {
 		await userRepository.createUser(user);
+
+		return { success: true };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};
+
+/**
+ * @description UpdateUser User
+ * @param user {object} Object containing all required fields to
+ * update user
+ *
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
+ */
+exports.updateUser = async user => {
+	try {
+		await userRepository.updateUser(user);
 
 		return { success: true };
 	} catch (error) {
