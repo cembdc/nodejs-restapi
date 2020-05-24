@@ -1,13 +1,18 @@
 const { body, param } = require('express-validator');
 const { userController } = require('../controller/controller.index');
 const { requestUtil } = require('../utils/utils.index');
-const { validator, apiResponse } = require('../middlewares/middlewares.index');
+const { validator, apiResponse, authorizer } = require('../middlewares/middlewares.index');
 
 exports.assignRoutes = app => {
 	/**
 	 * Get All Users
 	 */
-	app.get(requestUtil.getUrlPrefix('user'), userController.getAllUsers, apiResponse.send);
+	app.get(
+		requestUtil.getUrlPrefix('user'),
+		authorizer.checkAuth,
+		userController.getAllUsers,
+		apiResponse.send
+	);
 
 	/**
 	 * Get User
@@ -21,6 +26,7 @@ exports.assignRoutes = app => {
 				.withMessage('Id is required')
 		],
 		validator.validate,
+		authorizer.checkAuth,
 		userController.getUser,
 		apiResponse.send
 	);
@@ -45,6 +51,7 @@ exports.assignRoutes = app => {
 				.withMessage('email is not valid an email')
 		],
 		validator.validate,
+		authorizer.checkAuth,
 		userController.updateUser
 	);
 
@@ -87,6 +94,7 @@ exports.assignRoutes = app => {
 				.withMessage('passwords are not the same')
 		],
 		validator.validate,
+		authorizer.checkAuth,
 		userController.createUser,
 		apiResponse.send
 	);
