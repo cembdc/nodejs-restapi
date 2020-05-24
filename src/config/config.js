@@ -17,6 +17,7 @@ exports.config = {
 		api_base_url: process.env.API_BASE_URL
 	},
 	token_config: {
-		secret: 'nodejsRestApi'
+		secret: 'nodejsRestApi2020',
+		expiresIn: '2h'
 	}
 };

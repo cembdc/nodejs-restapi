@@ -55,3 +55,18 @@ exports.updateUser = async user => {
 		throw error;
 	}
 };
+
+/**
+ * @description Gets the user by email and password
+ * @param email {property} Email
+ * @param password {property} Password
+ * @returns {Promise<[{user}]>}
+ * user object
+ */
+exports.getUserByLoginInfo = async (email, password) => {
+	try {
+		return User.findOne({ email, password });
+	} catch (error) {
+		throw error;
+	}
+};

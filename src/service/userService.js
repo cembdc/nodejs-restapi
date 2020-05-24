@@ -1,4 +1,8 @@
+const jwt = require('jsonwebtoken');
 const { userRepository } = require('../repository/repository.index');
+const { cryptUtil } = require('../utils/utils.index');
+const { stateEnums } = require('../model/enums/enums.index');
+const { config } = require('../config/config');
 
 /**
  * @description Gets the all users
@@ -65,5 +69,36 @@ exports.updateUser = async user => {
 		return { success: true };
 	} catch (error) {
 		throw { success: false, error: any };
+	}
+};
+
+/**
+ * @description Authenticate user by email and password
+ * @param email {property} Email
+ * @param password {property} Password
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean, data: user}>}
+ * {success: false, error: any} or {success: true, data: {user}}
+ */
+exports.authenticateUser = async (email, password) => {
+	try {
+		const hashedPassword = cryptUtil.encode(password);
+		const user = await userRepository.getUserByLoginInfo(email, hashedPassword);
+
+		if (!user || user.state !== stateEnums.UserState.ACTIVE) return { success: false };
+
+		const token = jwt.sign(
+			{
+				userId: user._id,
+				email: user.email
+			},
+			config.token_config.secret,
+			{
+				expiresIn: config.token_config.expiresIn
+			}
+		);
+
+		return { success: true, data: token };
+	} catch (error) {
+		throw { success: false, error };
 	}
 };
