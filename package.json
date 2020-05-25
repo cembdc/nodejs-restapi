@@ -21,6 +21,7 @@
 		"node-cache": "^4.2.0",
 		"node-cache-promise": "^1.0.0",
 		"node-pre-gyp": "^0.13.0",
+		"nodemailer": "^6.4.6",
 		"random-base64-string": "^1.0.1",
 		"sanitize": "^2.1.0",
 		"useragent": "^2.3.0"

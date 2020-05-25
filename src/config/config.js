@@ -19,5 +19,12 @@ exports.config = {
 	token_config: {
 		secret: 'nodejsRestApi2020',
 		expiresIn: '2h'
+	},
+	mail_config: {
+		host: process.env.MAIL_HOST,
+		port: process.env.MAIL_PORT,
+		username: process.env.MAIL_USER_NAME,
+		password: process.env.MAIL_PASSWORD,
+		from: process.env.MAIL_FROM
 	}
 };
