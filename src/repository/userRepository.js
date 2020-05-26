@@ -85,14 +85,14 @@ exports.getUserByEmail = async email => {
 };
 
 /**
- * @description Gets the user by forgotPasswordCode
- * @param forgotPasswordCode {property} ForgotPasswordCode
+ * @description Gets the user by verificationCode
+ * @param verificationCode {property} verificationCode
  * @returns {Promise<[{user}]>}
  * user object
  */
-exports.getUserByForgotPasswordCode = async forgotPasswordCode => {
+exports.getUserByVerificationCode = async verificationCode => {
 	try {
-		return User.findOne({ forgotPasswordCode });
+		return User.findOne({ verificationCode });
 	} catch (error) {
 		throw error;
 	}

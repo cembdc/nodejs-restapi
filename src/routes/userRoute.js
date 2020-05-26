@@ -69,33 +69,4 @@ exports.assignRoutes = app => {
 	// 	validator.validate,
 	// 	userController.deleteUser
 	// );
-
-	/**
-	 * Create User
-	 */
-	app.post(
-		requestUtil.getUrlPrefix('user'),
-		[
-			body('userName')
-				.exists()
-				.isLength({ min: 5, max: 10 })
-				.withMessage('userName is not valid.(min: 5, max: 10)'),
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('email is not valid an email'),
-			body('password')
-				.isLength({ min: 5 })
-				.exists()
-				.withMessage('password must be at least 5 chars long'),
-			body('confirmPassword')
-				.exists()
-				.custom((value, { req }) => value === req.body.password)
-				.withMessage('passwords are not the same')
-		],
-		validator.validate,
-		authorizer.checkAuth,
-		userController.createUser,
-		apiResponse.send
-	);
 };

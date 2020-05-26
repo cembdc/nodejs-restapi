@@ -116,14 +116,14 @@ exports.forgotPasswordRequest = async email => {
 
 		if (!user) return { success: false };
 
-		user.forgotPasswordCode = cryptUtil.encode(user.email + Date.now());
+		user.verificationCode = cryptUtil.encode(user.email + Date.now());
 
 		userRepository.updateUser(user);
 
 		emailService.sendForgotPasswordMail({
 			toAddress: user.email,
 			userName: user.userName,
-			code: user.forgotPasswordCode
+			code: user.verificationCode
 		});
 
 		return { success: true };
@@ -141,16 +141,43 @@ exports.forgotPasswordRequest = async email => {
  */
 exports.renewPassword = async (code, password) => {
 	try {
-		const user = await userRepository.getUserByForgotPasswordCode(code);
+		const user = await userRepository.getUserByVerificationCode(code);
 
 		if (!user) return { success: false };
 
 		user.password = cryptUtil.encode(password);
-		user.forgotPasswordCode = null;
+		user.verificationCode = null;
 
 		userRepository.updateUser(user);
 
 		return { success: true, data: user };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};
+
+/**
+ * @description Register User and send a verification mail
+ * @param user {object} Object containing all required fields to create user
+ *
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
+ */
+exports.registerUser = async user => {
+	try {
+		const existUser = await userRepository.getUserByEmail(user.email);
+
+		if (existUser) return { success: false, error: 'This email is in use' };
+
+		await userRepository.createUser(user);
+
+		emailService.sendAccountVerificationMail({
+			toAddress: user.email,
+			userName: user.userName,
+			code: cryptUtil.encode(user.email + Date.now())
+		});
+
+		return { success: true };
 	} catch (error) {
 		throw { success: false, error: any };
 	}

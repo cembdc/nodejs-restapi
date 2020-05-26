@@ -66,7 +66,7 @@ exports.forgotPassword = async (req, res, next) => {
 exports.renewPassword = async (req, res, next) => {
 	try {
 		const { password, code } = req.body;
-		// const { code } = req.params;
+
 		const result = await userService.renewPassword(code, password);
 
 		if (!result.success) {
@@ -74,6 +74,37 @@ exports.renewPassword = async (req, res, next) => {
 				status: Status.NOT_FOUND,
 				success: result.success,
 				message: 'User not found.'
+			};
+		} else {
+			res.apiResponse = {
+				status: Status.OK,
+				success: result.success,
+				message: 'Succesfull'
+			};
+		}
+	} catch (error) {
+		res.apiResponse = {
+			status: Status.BAD_REQUEST,
+			success: false,
+			error: error.message,
+			data: null,
+			message: 'Error'
+		};
+	}
+
+	next();
+};
+
+exports.register = async (req, res, next) => {
+	try {
+		const { userName, email, password } = req.body;
+		const result = await userService.registerUser({ userName, email, password });
+
+		if (!result.success) {
+			res.apiResponse = {
+				status: Status.NOT_FOUND,
+				success: result.success,
+				error: result.error
 			};
 		} else {
 			res.apiResponse = {

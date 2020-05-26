@@ -29,6 +29,7 @@ exports.config = {
 	},
 	client_config: {
 		host: process.env.CLIENT_HOST,
-		forgotPasswordHtml: 'forgotPassword.html'
+		forgotPasswordHtml: 'forgotpassword.html',
+		accountVerification: 'accountverification.html'
 	}
 };
