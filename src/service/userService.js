@@ -3,6 +3,7 @@ const { userRepository } = require('../repository/repository.index');
 const { cryptUtil } = require('../utils/utils.index');
 const { stateEnums } = require('../model/enums/enums.index');
 const { config } = require('../config/config');
+const emailService = require('./emailService');
 
 /**
  * @description Gets the all users
@@ -100,5 +101,31 @@ exports.authenticateUser = async (email, password) => {
 		return { success: true, data: token };
 	} catch (error) {
 		throw { success: false, error };
+	}
+};
+
+/**
+ * @description Gets user by email and sends an email with code to renew password
+ * @param email {property} Email
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean, data: user}>}
+ * {success: false, error: any} or {success: true, data: {user}}
+ */
+exports.forgotPasswordRequest = async email => {
+	try {
+		const user = await userRepository.getUserByEmail(email);
+
+		if (!user) return { success: false };
+
+		const hashedCode = cryptUtil.encode(user.email);
+
+		emailService.sendForgotPasswordMail({
+			toAddress: user.email,
+			userName: user.userName,
+			code: hashedCode
+		});
+
+		return { success: true, data: user };
+	} catch (error) {
+		throw { success: false, error: any };
 	}
 };

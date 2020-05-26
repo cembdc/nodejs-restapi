@@ -26,5 +26,9 @@ exports.config = {
 		username: process.env.MAIL_USER_NAME,
 		password: process.env.MAIL_PASSWORD,
 		from: process.env.MAIL_FROM
+	},
+	client_config: {
+		host: process.env.CLIENT_HOST,
+		forgotPasswordHtml: 'forgotPassword.html'
 	}
 };

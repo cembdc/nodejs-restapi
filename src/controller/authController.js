@@ -31,3 +31,34 @@ exports.login = async (req, res, next) => {
 
 	next();
 };
+
+exports.forgotPassword = async (req, res, next) => {
+	try {
+		const { email } = req.body;
+		const result = await userService.forgotPasswordRequest(email);
+
+		if (!result.success) {
+			res.apiResponse = {
+				status: Status.NOT_FOUND,
+				success: result.success,
+				message: 'User not found.'
+			};
+		} else {
+			res.apiResponse = {
+				status: Status.OK,
+				success: result.success,
+				message: 'Succesfull'
+			};
+		}
+	} catch (error) {
+		res.apiResponse = {
+			status: Status.BAD_REQUEST,
+			success: false,
+			error: error.message,
+			data: null,
+			message: 'Error'
+		};
+	}
+
+	next();
+};

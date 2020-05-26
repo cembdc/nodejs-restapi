@@ -38,6 +38,9 @@ const UserSchema = new Schema({
 	updatedDateTime: {
 		type: Date,
 		default: Date.now
+	},
+	forgotPasswordCode: {
+		type: String
 	}
 });
 

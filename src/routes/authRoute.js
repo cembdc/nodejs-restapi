@@ -23,4 +23,20 @@ exports.assignRoutes = app => {
 		authController.login,
 		apiResponse.send
 	);
+
+	/**
+	 * forgotPassword
+	 */
+	app.post(
+		requestUtil.getUrlPrefix('auth/forgotpassword'),
+		[
+			body('email')
+				.exists()
+				.isEmail()
+				.withMessage('email is not valid an email')
+		],
+		validator.validate,
+		authController.forgotPassword,
+		apiResponse.send
+	);
 };

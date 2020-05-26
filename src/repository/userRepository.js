@@ -70,3 +70,17 @@ exports.getUserByLoginInfo = async (email, password) => {
 		throw error;
 	}
 };
+
+/**
+ * @description Gets the user by email
+ * @param email {property} Email
+ * @returns {Promise<[{user}]>}
+ * user object
+ */
+exports.getUserByEmail = async email => {
+	try {
+		return User.findOne({ email });
+	} catch (error) {
+		throw error;
+	}
+};

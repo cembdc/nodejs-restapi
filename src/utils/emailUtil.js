@@ -17,13 +17,6 @@ const transport = nodemailer.createTransport({
  *
  */
 exports.sendMail = async mailOptions => {
-	// var mailOptions = {
-	// 	from: 'youremail@gmail.com',
-	// 	to: 'myfriend@yahoo.com',
-	// 	subject: 'Sending Email using Node.js',
-	// 	text: 'That was easy!'
-	// };
-
 	try {
 		await transport.sendMail(mailOptions);
 		console.log('Email sent');
