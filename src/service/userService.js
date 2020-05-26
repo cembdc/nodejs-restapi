@@ -107,8 +107,8 @@ exports.authenticateUser = async (email, password) => {
 /**
  * @description Gets user by email and sends an email with code to renew password
  * @param email {property} Email
- * @returns {Promise<{success: boolean, error: *} | {success: boolean, data: user}>}
- * {success: false, error: any} or {success: true, data: {user}}
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
  */
 exports.forgotPasswordRequest = async email => {
 	try {
@@ -116,7 +116,7 @@ exports.forgotPasswordRequest = async email => {
 
 		if (!user) return { success: false };
 
-		user.forgotPasswordCode = cryptUtil.encode(user.email);
+		user.forgotPasswordCode = cryptUtil.encode(user.email + Date.now());
 
 		userRepository.updateUser(user);
 
@@ -125,6 +125,30 @@ exports.forgotPasswordRequest = async email => {
 			userName: user.userName,
 			code: user.forgotPasswordCode
 		});
+
+		return { success: true };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};
+
+/**
+ * @description Renew user password
+ * @param code {property} Code
+ * @param password {property} Password
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
+ */
+exports.renewPassword = async (code, password) => {
+	try {
+		const user = await userRepository.getUserByForgotPasswordCode(code);
+
+		if (!user) return { success: false };
+
+		user.password = cryptUtil.encode(password);
+		user.forgotPasswordCode = null;
+
+		userRepository.updateUser(user);
 
 		return { success: true, data: user };
 	} catch (error) {
