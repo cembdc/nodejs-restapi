@@ -56,6 +56,11 @@ UserSchema.pre('save', function(next) {
 	}
 });
 
+UserSchema.pre('updateOne', function(next) {
+	this._update.updatedDateTime = new Date();
+	next();
+});
+
 const User = mongoose.model('user', UserSchema);
 
 exports.User = User;

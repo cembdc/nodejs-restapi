@@ -49,8 +49,7 @@ exports.createUser = async user => {
  */
 exports.updateUser = async user => {
 	try {
-		const userModel = new User(user);
-		return userModel.save();
+		await User.updateOne(user);
 	} catch (error) {
 		throw error;
 	}

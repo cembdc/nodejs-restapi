@@ -116,12 +116,14 @@ exports.forgotPasswordRequest = async email => {
 
 		if (!user) return { success: false };
 
-		const hashedCode = cryptUtil.encode(user.email);
+		user.forgotPasswordCode = cryptUtil.encode(user.email);
+
+		userRepository.updateUser(user);
 
 		emailService.sendForgotPasswordMail({
 			toAddress: user.email,
 			userName: user.userName,
-			code: hashedCode
+			code: user.forgotPasswordCode
 		});
 
 		return { success: true, data: user };
