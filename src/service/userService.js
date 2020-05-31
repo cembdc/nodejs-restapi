@@ -169,15 +169,38 @@ exports.registerUser = async user => {
 
 		if (existUser) return { success: false, error: 'This email is in use' };
 
+		user.verificationCode = cryptUtil.encode(user.email + Date.now());
 		await userRepository.createUser(user);
 
 		emailService.sendAccountVerificationMail({
 			toAddress: user.email,
 			userName: user.userName,
-			code: cryptUtil.encode(user.email + Date.now())
+			code: user.verificationCode
 		});
 
 		return { success: true };
+	} catch (error) {
+		throw { success: false, error: any };
+	}
+};
+
+/**
+ * @description Verify user register
+ * @param code {property} Code
+ * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
+ * {success: false, error: any} or {success: true}
+ */
+exports.verifyRegister = async code => {
+	try {
+		const user = await userRepository.getUserByVerificationCode(code);
+
+		if (!user) return { success: false };
+
+		user.verificationCode = null;
+
+		userRepository.updateUser(user);
+
+		return { success: true, data: user };
 	} catch (error) {
 		throw { success: false, error: any };
 	}
