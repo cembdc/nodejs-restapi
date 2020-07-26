@@ -69,22 +69,22 @@ exports.assignRoutes = app => {
 	app.post(
 		requestUtil.getUrlPrefix('auth/register'),
 		[
-			body('userName')
+			body('username')
 				.exists()
 				.isLength({ min: 5, max: 10 })
-				.withMessage('userName is not valid.(min: 5, max: 10)'),
+				.withMessage('Username is not valid.(min: 5, max: 10)'),
 			body('email')
 				.exists()
 				.isEmail()
-				.withMessage('email is not valid an email'),
+				.withMessage('Email is not valid an email'),
 			body('password')
+				.exists()
 				.isLength({ min: 5 })
-				.exists()
-				.withMessage('password must be at least 5 chars long'),
-			body('confirmPassword')
-				.exists()
-				.custom((value, { req }) => value === req.body.password)
-				.withMessage('passwords are not the same')
+				.withMessage('Password must be at least 5 chars long')
+			// body('confirmPassword')
+			// 	.exists()
+			// 	.custom((value, { req }) => value === req.body.password)
+			// 	.withMessage('passwords are not the same')
 		],
 		validator.validate,
 		authController.register,

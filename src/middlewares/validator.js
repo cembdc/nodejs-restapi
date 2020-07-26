@@ -6,7 +6,7 @@ exports.validate = (req, res, next) => {
 		return next();
 	}
 	const extractedErrors = [];
-	errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
+	errors.array().map(err => extractedErrors.push({ message: err.msg, param: err.param + 'NotValid' }));
 
 	return res.status(422).json({
 		errors: extractedErrors

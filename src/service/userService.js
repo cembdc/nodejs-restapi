@@ -174,7 +174,7 @@ exports.registerUser = async user => {
 
 		emailService.sendAccountVerificationMail({
 			toAddress: user.email,
-			userName: user.userName,
+			username: user.username,
 			code: user.verificationCode
 		});
 

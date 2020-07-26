@@ -6,7 +6,7 @@ const { cryptUtil } = require('../utils/utils.index');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-	userName: {
+	username: {
 		type: String,
 		unique: true,
 		required: true

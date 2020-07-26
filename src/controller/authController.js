@@ -97,14 +97,14 @@ exports.renewPassword = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
 	try {
-		const { userName, email, password } = req.body;
-		const result = await userService.registerUser({ userName, email, password });
+		const { username, email, password } = req.body;
+		const result = await userService.registerUser({ username, email, password });
 
 		if (!result.success) {
 			res.apiResponse = {
-				status: Status.NOT_FOUND,
+				status: Status.NOT_ACCEPTABLE,
 				success: result.success,
-				error: result.error
+				message: result.error
 			};
 		} else {
 			res.apiResponse = {
