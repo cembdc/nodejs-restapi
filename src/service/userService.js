@@ -85,11 +85,11 @@ exports.authenticateUser = async (email, password) => {
 		const hashedPassword = cryptUtil.encode(password);
 		const user = await userRepository.getUserByLoginInfo(email, hashedPassword);
 
-		if (!user || user.state !== stateEnums.UserState.ACTIVE) return { success: false };
+		if (!user || user.state !== stateEnums.UserState.Active) return { success: false };
 
 		const token = jwt.sign(
 			{
-				userId: user._id,
+				userId: user.id,
 				email: user.email
 			},
 			config.token_config.secret,

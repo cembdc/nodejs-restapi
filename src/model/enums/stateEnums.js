@@ -1,15 +1,15 @@
 module.exports = {
 	State: {
-		ACTIVE: 'ACTIVE',
-		PASSIVE: 'PASSIVE'
+		Active: 'active',
+		Passive: 'passive'
 	},
 
 	UserState: {
-		ACTIVE: 1,
-		PASSIVE: 2,
-		BLOCKED: 3,
-		EXPIRED_PASSWORD: 4,
-		NOT_VERIFIED: 5,
-		SUSPEND: 6
+		Active: 'active',
+		Passive: 'passive',
+		Blocked: 'blocked',
+		ExpiredPassword: 'expiredPassword',
+		NotVerified: 'notVerified',
+		Suspended: 'suspended'
 	}
 };

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const { stateEnums } = require('./enums/enums.index');
 const { cryptUtil } = require('../utils/utils.index');
+const { toJSON } = require('./plugins/plugins.index');
 
 const { Schema } = mongoose;
 
@@ -21,15 +22,15 @@ const UserSchema = new Schema({
 		required: true
 	},
 	state: {
-		type: Number,
+		type: String,
 		enum: [
-			stateEnums.UserState.ACTIVE,
-			stateEnums.UserState.BLOCKED,
-			stateEnums.UserState.NOT_VERIFIED,
-			stateEnums.UserState.PASSIVE,
-			stateEnums.UserState.SUSPEND
+			stateEnums.UserState.Active,
+			stateEnums.UserState.Blocked,
+			stateEnums.UserState.NotVerified,
+			stateEnums.UserState.Passive,
+			stateEnums.UserState.Suspended
 		],
-		default: stateEnums.UserState.NOT_VERIFIED
+		default: stateEnums.UserState.NotVerified
 	},
 	createdDateTime: {
 		type: Date,
@@ -43,6 +44,8 @@ const UserSchema = new Schema({
 		type: String
 	}
 });
+
+UserSchema.plugin(toJSON);
 
 UserSchema.pre('save', function(next) {
 	const user = this;
