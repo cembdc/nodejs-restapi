@@ -1,4 +1,5 @@
 # Nodejs-Restapi-Boilerplate
+[![Coverage Status](https://coveralls.io/repos/github/CemBdc/nodejs-restapi/badge.svg?branch=master)](https://coveralls.io/github/CemBdc/nodejs-restapi?branch=master)
 
 Boilerplate for API backends with Node.js and Express.
 
