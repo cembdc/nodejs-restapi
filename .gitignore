@@ -353,3 +353,4 @@ MigrationBackup/
 package-lock.json
 
 coverage/lcov-report/
+.nyc_output/
