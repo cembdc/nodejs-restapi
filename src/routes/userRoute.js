@@ -1,7 +1,7 @@
-const { body, param } = require('express-validator');
 const { userController } = require('../controller/controller.index');
 const { requestUtil } = require('../utils/utils.index');
-const { validator, apiResponse, authorizer } = require('../middlewares/middlewares.index');
+const { apiResponse, authorizer, validate } = require('../middlewares/middlewares.index');
+const { userValidation } = require('../validations/validations.index');
 
 exports.assignRoutes = app => {
 	/**
@@ -19,13 +19,7 @@ exports.assignRoutes = app => {
 	 */
 	app.get(
 		requestUtil.getUrlPrefix('user/:id'),
-		[
-			param('id')
-				.exists()
-				.custom(value => value.match(/^[0-9a-fA-F]{24}$/) != null)
-				.withMessage('Id is required')
-		],
-		validator.validate,
+		validate(userValidation.getUser),
 		authorizer.checkAuth,
 		userController.getUser,
 		apiResponse.send
@@ -36,21 +30,7 @@ exports.assignRoutes = app => {
 	 */
 	app.put(
 		requestUtil.getUrlPrefix('user/:id'),
-		[
-			param('id')
-				.exists()
-				.custom(value => value.match(/^[0-9a-fA-F]{24}$/) != null)
-				.withMessage('Id is required'),
-			body('userName')
-				.exists()
-				.isLength({ min: 5, max: 10 })
-				.withMessage('userName is not valid.(min: 5, max: 10)'),
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('email is not valid an email')
-		],
-		validator.validate,
+		validate(userValidation.updateUser),
 		authorizer.checkAuth,
 		userController.updateUser
 	);

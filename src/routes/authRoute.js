@@ -1,7 +1,7 @@
-const { body, param } = require('express-validator');
 const { authController } = require('../controller/controller.index');
 const { requestUtil } = require('../utils/utils.index');
-const { validator, apiResponse } = require('../middlewares/middlewares.index');
+const { apiResponse, validate } = require('../middlewares/middlewares.index');
+const { authValidation } = require('../validations/validations.index');
 
 exports.assignRoutes = app => {
 	/**
@@ -9,17 +9,7 @@ exports.assignRoutes = app => {
 	 */
 	app.post(
 		requestUtil.getUrlPrefix('auth/login'),
-		[
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('email is not valid an email'),
-			body('password')
-				.isLength({ min: 5 })
-				.exists()
-				.withMessage('password must be at least 5 chars long')
-		],
-		validator.validate,
+		validate(authValidation.login),
 		authController.login,
 		apiResponse.send
 	);
@@ -29,13 +19,7 @@ exports.assignRoutes = app => {
 	 */
 	app.post(
 		requestUtil.getUrlPrefix('auth/forgotpassword'),
-		[
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('email is not valid an email')
-		],
-		validator.validate,
+		validate(authValidation.forgotPassword),
 		authController.forgotPassword,
 		apiResponse.send
 	);
@@ -45,20 +29,7 @@ exports.assignRoutes = app => {
 	 */
 	app.post(
 		requestUtil.getUrlPrefix('auth/renewPassword'),
-		[
-			body('code')
-				.exists()
-				.withMessage('Code is required'),
-			body('password')
-				.isLength({ min: 5 })
-				.exists()
-				.withMessage('password must be at least 5 chars long'),
-			body('confirmPassword')
-				.exists()
-				.custom((value, { req }) => value === req.body.password)
-				.withMessage('passwords are not the same')
-		],
-		validator.validate,
+		validate(authValidation.resetPassword),
 		authController.renewPassword,
 		apiResponse.send
 	);
@@ -68,25 +39,7 @@ exports.assignRoutes = app => {
 	 */
 	app.post(
 		requestUtil.getUrlPrefix('auth/register'),
-		[
-			body('username')
-				.exists()
-				.isLength({ min: 5, max: 10 })
-				.withMessage('Username is not valid.(min: 5, max: 10)'),
-			body('email')
-				.exists()
-				.isEmail()
-				.withMessage('Email is not valid an email'),
-			body('password')
-				.exists()
-				.isLength({ min: 5 })
-				.withMessage('Password must be at least 5 chars long')
-			// body('confirmPassword')
-			// 	.exists()
-			// 	.custom((value, { req }) => value === req.body.password)
-			// 	.withMessage('passwords are not the same')
-		],
-		validator.validate,
+		validate(authValidation.register),
 		authController.register,
 		apiResponse.send
 	);
