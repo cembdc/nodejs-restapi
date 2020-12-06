@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { config } = require('../config/config');
+const { config } = require('../../src/config/config');
 
 const setupTestDB = () => {
 	before(async () => {
