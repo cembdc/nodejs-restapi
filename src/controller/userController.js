@@ -51,8 +51,8 @@ exports.getUser = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
 	try {
-		const { userName, email, password } = req.body;
-		const result = await userService.createUser({ userName, email, password });
+		const { name, email, password } = req.body;
+		const result = await userService.createUser({ name, email, password });
 
 		res.apiResponse = {
 			status: Status.OK,
@@ -76,8 +76,8 @@ exports.createUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
 	try {
-		const { userName, email } = req.body;
-		const result = await userService.updateUser({ userName, email });
+		const { name, email } = req.body;
+		const result = await userService.updateUser({ name, email });
 
 		res.apiResponse = {
 			status: Status.OK,

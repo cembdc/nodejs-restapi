@@ -122,7 +122,7 @@ exports.forgotPasswordRequest = async email => {
 
 		emailService.sendForgotPasswordMail({
 			toAddress: user.email,
-			userName: user.userName,
+			name: user.name,
 			code: user.verificationCode
 		});
 
@@ -174,7 +174,7 @@ exports.registerUser = async user => {
 
 		emailService.sendAccountVerificationMail({
 			toAddress: user.email,
-			username: user.username,
+			name: user.name,
 			code: user.verificationCode
 		});
 

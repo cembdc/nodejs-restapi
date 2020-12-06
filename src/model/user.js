@@ -7,9 +7,8 @@ const { toJSON } = require('./plugins/plugins.index');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-	username: {
+	name: {
 		type: String,
-		unique: true,
 		required: true
 	},
 	email: {

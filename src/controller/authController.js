@@ -97,8 +97,8 @@ exports.renewPassword = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
 	try {
-		const { username, email, password } = req.body;
-		const result = await userService.registerUser({ username, email, password });
+		const { name, email, password } = req.body;
+		const result = await userService.registerUser({ name, email, password });
 
 		if (!result.success) {
 			res.apiResponse = {
