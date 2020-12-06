@@ -4,7 +4,8 @@
 	"main": "server/server.js",
 	"scripts": {
 		"start": "src/server.js",
-		"test": "mocha --timeout 10000npm "
+		"test": "mocha --timeout 10000npm ",
+		"test-with-coverage": "nyc --reporter=text mocha --timeout 10000npm"
 	},
 	"dependencies": {
 		"app-root-path": "^2.2.1",
@@ -39,7 +40,9 @@
 		"eslint-plugin-react": "^7.14.3",
 		"eslint-plugin-react-hooks": "^1.7.0",
 		"mocha": "^7.1.1",
+		"nyc": "^15.1.0",
 		"prettier": "^1.18.2",
-		"request": "^2.88.2"
+		"request": "^2.88.2",
+		"supertest": "^6.0.1"
 	}
 }
