@@ -2,7 +2,6 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const routes = require('../routes/routes');
-const { config } = require('../config/config');
 
 const allowCrossDomain = (req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
