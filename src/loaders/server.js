@@ -7,9 +7,7 @@ const { config } = require('../config/config');
 
 mongoose.startMongo().then(() => {
 	console.log('Connected to MongoDB');
-	// server = app.listen(config.port, () => {
-	//   logger.info(`Listening to port ${config.port}`);
-	// });
+
 	app.listen(config.api_config.api_port);
 
 	console.log(
