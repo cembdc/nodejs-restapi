@@ -3,8 +3,7 @@ const { config } = require('../../src/config/config');
 
 const setupTestDB = () => {
 	before(async () => {
-		const conStr =
-			'mongodb://' + config.db_config.host + ':' + config.db_config.port + '/' + config.db_config.name;
+		const conStr = config.db_config.connStr;
 		await mongoose.connect(conStr, { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });
 	});
 

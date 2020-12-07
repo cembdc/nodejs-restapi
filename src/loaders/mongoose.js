@@ -6,8 +6,7 @@ let db;
 const startMongo = async () => {
 	if (db) return db;
 
-	const conStr =
-		'mongodb://' + config.db_config.host + ':' + config.db_config.port + '/' + config.db_config.name;
+	const conStr = config.db_config.connStr;
 
 	try {
 		await mongoose.connect(conStr, { useNewUrlParser: true, autoIndex: false, useUnifiedTopology: true });

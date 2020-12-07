@@ -4,12 +4,10 @@ dotenv.config();
 
 exports.config = {
 	db_config: {
-		host: process.env.DB_HOST,
-		port: process.env.DB_PORT,
-		name: process.env.DB_NAME,
 		poolsize: process.env.DB_POOLSIZE,
 		auto_reconnect: process.env.DB_AUTO_CONNECT,
-		authdb: process.env.DB_AUTHDB
+		authdb: process.env.DB_AUTHDB,
+		connStr: process.env.DB_CONNECTION_STRING
 	},
 	api_config: {
 		api_host: process.env.API_HOST,
