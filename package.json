@@ -1,9 +1,17 @@
 {
 	"name": "nodejs-restapi",
+	"description": "Boilerplate for API backends with Node.js and Express.",
 	"version": "1.0.0",
+	"author": "Cem Bideci <cembdci@gmail.com>",
+	"repository": "https://github.com/CemBdc/nodejs-restapi.git",
+	"license": "MIT",
 	"main": "server/server.js",
+	"engines": {
+		"node": ">=12.0.0"
+	},
 	"scripts": {
 		"start": "src/server.js",
+		"lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
 		"test": "mocha --timeout 10000npm ",
 		"test-with-coverage": "nyc --reporter=lcov mocha --timeout 10000npm"
 	},
@@ -27,7 +35,6 @@
 		"sanitize": "^2.1.0",
 		"useragent": "^2.3.0"
 	},
-	"description": "Boilerplate server side source code",
 	"devDependencies": {
 		"chai": "^4.2.0",
 		"chai-http": "^4.3.0",

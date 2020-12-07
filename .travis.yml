@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+    - '12'
+services:
+    - mongodb
+cache:
+    directories:
+        - ~/.npm
+branches:
+    only:
+        - master
+env:
+    global:
+        - API_PORT=3000
+        - DB_CONNECTION_STRING=mongodb://localhost:27017/nodejs-restapi
+script:
+    - npm run lint
+    - npm run test
+after_success: npm run test-with-coverage
