@@ -2,6 +2,7 @@
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5e98f54d5b3a41ae87355a3106c889cf)](https://www.codacy.com/gh/CemBdc/nodejs-restapi/dashboard?utm_source=github.com&utm_medium=referral&utm_content=CemBdc/nodejs-restapi&utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/CemBdc/nodejs-restapi.svg?branch=master)](https://travis-ci.com/CemBdc/nodejs-restapi)
 [![Coverage Status](https://coveralls.io/repos/github/CemBdc/nodejs-restapi/badge.svg?branch=master)](https://coveralls.io/github/CemBdc/nodejs-restapi?branch=master)
 
 Boilerplate for API backends with Node.js and Express.
