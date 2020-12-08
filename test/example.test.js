@@ -6,7 +6,7 @@ describe('Simple Math Test', () => {
 	it('should return 2', () => {
 		expect(1 + 1).to.equal(2);
 	});
-	it('should return 9', done => {
+	it('GET /hello should return Hello World', done => {
 		supertest(app)
 			.get('/hello')
 			.expect('Content-type', /text/)
