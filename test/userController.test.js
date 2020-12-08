@@ -1,6 +1,5 @@
 const { expect, assert, should } = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../src/loaders/express');
 
 // let should = chai.should();
 
