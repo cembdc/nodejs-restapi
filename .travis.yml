@@ -16,4 +16,4 @@ env:
 script:
     - npm run lint
     - npm run test
-after_success: echo 'Done'
+after_success: echo "Done"
