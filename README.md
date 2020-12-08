@@ -56,10 +56,10 @@ test/
 -   **Santizing**: sanitize request data against xss and query injection
 -   **CORS**: //TODO: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 -   **Compression**: //TODO: gzip compression with [compression](https://github.com/expressjs/compression)
--   **CI**: //TODO: continuous integration with [Travis CI](https://travis-ci.org)
+-   **CI**: continuous integration with [Travis CI](https://travis-ci.org)
 -   **Docker support**
--   **Code coverage**: //TODO: using [coveralls](https://coveralls.io)
--   **Code quality**: //TODO: with [Codacy](https://www.codacy.com)
+-   **Code coverage**: using [coveralls](https://coveralls.io)
+-   **Code quality**: with [Codacy](https://www.codacy.com)
 -   **Git hooks**: //TODO: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
 -   **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
 -   **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
