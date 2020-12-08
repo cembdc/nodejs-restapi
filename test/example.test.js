@@ -1,6 +1,6 @@
 const supertest = require('supertest');
 const { expect, assert, should } = require('chai');
-const app = require('../src/loaders/express');
+// const app = require('../src/loaders/express');
 
 describe('Simple Math Test', () => {
 	it('should return 2', () => {
