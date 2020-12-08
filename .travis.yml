@@ -14,6 +14,7 @@ env:
         - API_PORT=3000
         - DB_CONNECTION_STRING=mongodb://localhost:27017/nodejs-restapi
 script:
+    - echo '*******Build Starts*******'
     - npm run lint
     - npm run test
-after_success: echo "Done"
+    - echo '*******Build Done*******'
