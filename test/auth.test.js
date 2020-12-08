@@ -4,8 +4,12 @@ const { expect } = require('chai');
 const app = require('../src/loaders/express');
 // const userRepository = require('../src/repository/userRepository');
 const setupTestDB = require('./utils/setupTestDB');
+const { config } = require('../src/config/config');
 
 setupTestDB();
+// const server = request.agent(
+// 	`${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`
+// );
 
 describe('Authentication API', () => {
 	let dbUser;

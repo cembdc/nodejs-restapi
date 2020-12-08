@@ -19,6 +19,10 @@ app.use(mongoSanitize());
 
 routes.assignRoutes(app);
 
+const server = app.listen(3000, () => {
+	console.log('App running on port 3000');
+});
+
 // exports.startServer = () => {
 // 	try {
 // 		app.listen(config.api_config.api_port);
@@ -32,4 +36,4 @@ routes.assignRoutes(app);
 // 	}
 // };
 
-module.exports = app;
+module.exports = server;
