@@ -28,8 +28,8 @@ describe('Example Test', () => {
 			.end((err, res) => {
 				expect(res.text).to.be.equal('Hello World');
 
-				server.close();
-				done();
+				// server.close();
+				// done();
 			});
 	});
 });

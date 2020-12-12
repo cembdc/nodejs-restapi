@@ -12,8 +12,8 @@
 	"scripts": {
 		"start": "src/server.js",
 		"lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
-		"test": "mocha --timeout 10000npm ",
-		"test-with-coverage": "nyc report --reporter=lcov mocha --timeout 10000npm | coveralls"
+		"test": "nyc --reporter=html --reporter=text mocha --timeout 20000 --exit",
+		"test-with-coverage": "nyc report --reporter=text-lcov | coveralls"
 	},
 	"dependencies": {
 		"app-root-path": "^2.2.1",
