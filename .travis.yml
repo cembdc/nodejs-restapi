@@ -12,6 +12,8 @@ branches:
 env:
     global:
         - API_PORT=3000
+        - API_HOST=http://localhost
+        - API_BASE_URL=/api/v1/
         - DB_CONNECTION_STRING=mongodb://localhost:27017/nodejs-restapi
 script:
     - echo '*******Build Starts*******'
