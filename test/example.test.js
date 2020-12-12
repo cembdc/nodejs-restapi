@@ -29,7 +29,7 @@ describe('Example Test', () => {
 				expect(res.text).to.be.equal('Hello World');
 
 				// server.close();
-				// done();
+				done();
 			});
 	});
 });
