@@ -19,9 +19,10 @@ app.use(mongoSanitize());
 
 routes.assignRoutes(app);
 
-// app.get('/hello', (req, res, next) => {
-// 	res.send('Hello World');
-// });
+app.get('/hello', (req, res, next) => {
+	res.send('Hello World');
+	next();
+});
 
 // const server = app.listen(3000, () => {
 // 	console.log('App running on port 3000');
