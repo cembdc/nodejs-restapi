@@ -12,7 +12,7 @@
 	"scripts": {
 		"start": "src/server.js",
 		"lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
-		"test": "nyc --reporter=html --reporter=text mocha --timeout 20000 --exit",
+		"test": "nyc --reporter=html --reporter=text mocha --timeout 10000npm --exit",
 		"test-with-coverage": "nyc report --reporter=text-lcov | coveralls"
 	},
 	"dependencies": {
