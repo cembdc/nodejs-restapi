@@ -1,14 +1,14 @@
 const supertest = require('supertest');
 const { expect, assert, should } = require('chai');
-const app = require('../src/loaders/express');
+const app = require('../src/loaders/server');
 const { config } = require('../src/config/config');
 
-app.listen(config.api_config.api_port, () =>
-	console.log(
-		`%cAPI Running on: ${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`,
-		'color: green'
-	)
-);
+// app.listen(config.api_config.api_port, () =>
+// 	console.log(
+// 		`%cAPI Running on: ${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`,
+// 		'color: green'
+// 	)
+// );
 
 describe('Example Test', () => {
 	it('should return 2', () => {
