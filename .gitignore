@@ -352,6 +352,6 @@ MigrationBackup/
 # package-lock.json
 package-lock.json
 
-coverage/lcov-report/
+coverage/
 .nyc_output/
 .env
