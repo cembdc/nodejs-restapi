@@ -9,16 +9,12 @@ const setupTestDBAndConnection = require('./utils/setupTestDBAndConnection');
 
 setupTestDBAndConnection();
 
-const server = app.listen(config.api_config.api_port, () =>
+app.listen(config.api_config.api_port, () =>
 	console.log(
 		`%cAPI Running on: ${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`,
 		'color: green'
 	)
 );
-
-// const server = request.agent(
-// 	`${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`
-// );
 
 describe('Authentication API', () => {
 	let dbUser;
@@ -46,16 +42,15 @@ describe('Authentication API', () => {
 				.post('/api/v1/auth/register')
 				.send(user)
 				.expect(httpStatus.OK)
-				.then(res => {
+				.end((err, res) => {
 					expect(res.body).to.have.a.property('success');
 					expect(res.body).to.have.a.property('message');
 					const { message } = res.body;
 					const { success } = res.body;
 					expect(success).to.be.equal(true);
 					expect(message).to.include('Succesfull');
+					done(err);
 				});
-
-			done();
 		});
 
 		it('should report error when email already exists', done => {
@@ -63,16 +58,15 @@ describe('Authentication API', () => {
 				.post('/api/v1/auth/register')
 				.send(dbUser)
 				.expect(httpStatus.NOT_ACCEPTABLE)
-				.then(res => {
+				.end((err, res) => {
 					expect(res.body).to.have.a.property('success');
 					expect(res.body).to.have.a.property('message');
 					const { message } = res.body;
 					const { success } = res.body;
 					expect(success).to.be.equal(false);
 					expect(message).to.include('This email is in use');
+					done(err);
 				});
-
-			done();
 		});
 
 		it('should report error when the email provided is not valid', done => {
@@ -81,14 +75,13 @@ describe('Authentication API', () => {
 				.post('/api/v1/auth/register')
 				.send(user)
 				.expect(httpStatus.UNPROCESSABLE_ENTITY)
-				.then(res => {
+				.end((err, res) => {
 					expect(res.body).to.have.a.property('errors');
 					const { errors } = res.body;
 					expect(errors).length.greaterThan(0);
 					expect(errors[0].message).to.include('"email" must be a valid email');
+					done(err);
 				});
-
-			done();
 		});
 
 		it('should report error when email and password are not provided', done => {
@@ -96,14 +89,13 @@ describe('Authentication API', () => {
 				.post('/api/v1/auth/register')
 				.send({})
 				.expect(httpStatus.UNPROCESSABLE_ENTITY)
-				.then(res => {
+				.end((err, res) => {
 					expect(res.body).to.have.a.property('errors');
 					const { errors } = res.body;
 					expect(errors).length.greaterThan(0);
 					expect(errors[0].message).to.include('"email" is required');
+					done(err);
 				});
-
-			done();
 		});
 	});
 
@@ -126,7 +118,7 @@ describe('Authentication API', () => {
 				.post('/api/v1/auth/login')
 				.send(loginUser)
 				.expect(httpStatus.BAD_GATEWAY)
-				.then(res => {
+				.end((err, res) => {
 					expect(res.body).to.have.a.property('success');
 					expect(res.body).to.have.a.property('message');
 					expect(res.body).to.have.a.property('data');
@@ -140,9 +132,29 @@ describe('Authentication API', () => {
 					expect(data).to.not.equal(undefined);
 					expect(data.token).to.not.equal(null);
 					expect(data.token).to.not.equal(undefined);
+					done(err);
 				});
-
-			done();
+			// .then(res => {
+			// 	expect(res.status).to.equal(httpStatus.OK);
+			// 	expect(res.body).to.have.a.property('success');
+			// 	expect(res.body).to.have.a.property('message');
+			// 	expect(res.body).to.have.a.property('data');
+			// 	expect(res.body.data).to.have.a.property('token');
+			// 	const { message } = res.body;
+			// 	const { success } = res.body;
+			// 	const { data } = res.body;
+			// 	expect(success).to.be.equal(true);
+			// 	expect(message).to.include('Succesfull');
+			// 	expect(data).to.not.equal(null);
+			// 	expect(data).to.not.equal(undefined);
+			// 	expect(data.token).to.not.equal(null);
+			// 	expect(data.token).to.not.equal(undefined);
+			// 	done();
+			// });
+			// .catch(err => {
+			// 	console.log(err);
+			// 	done(err);
+			// });
 		});
 
 		// 	it('should report error when email and password are not provided', () => {
