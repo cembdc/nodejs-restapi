@@ -2,7 +2,7 @@ const request = require('supertest');
 const httpStatus = require('http-status');
 const { expect } = require('chai');
 const app = require('../src/loaders/express');
-// const userRepository = require('../src/repository/userRepository');
+const userRepository = require('../src/repository/userRepository');
 const { config } = require('../src/config/config');
 const setupTestDBAndConnection = require('./utils/setupTestDBAndConnection');
 
@@ -27,7 +27,7 @@ describe('Authentication API', () => {
 		dbUser = {
 			name: 'Bran Stark',
 			email: 'branstark@gmail.com',
-			password: 'mypassword'
+			password: '123ljkD3ed'
 		};
 
 		user = {
@@ -36,7 +36,7 @@ describe('Authentication API', () => {
 			name: 'Cem Bideci'
 		};
 
-		// await userRepository.createUser(dbUser);
+		await userRepository.createUser(dbUser);
 	});
 
 	describe('POST /api/v1/auth/register', () => {
@@ -63,51 +63,53 @@ describe('Authentication API', () => {
 			done();
 		});
 
-		// it('should report error when email already exists', () => {
-		// 	return request(app)
-		// 		.post('/v1/auth/register')
-		// 		.send(dbUser)
-		// 		.expect(httpStatus.CONFLICT)
-		// 		.then(res => {
-		// 			const { field } = res.body.errors[0];
-		// 			const { location } = res.body.errors[0];
-		// 			const { messages } = res.body.errors[0];
-		// 			expect(field).to.be.equal('email');
-		// 			expect(location).to.be.equal('body');
-		// 			expect(messages).to.include('"email" already exists');
-		// 		});
-		// });
+		it('should report error when email already exists', done => {
+			request(app)
+				.post('/api/v1/auth/register')
+				.send(dbUser)
+				.expect(httpStatus.NOT_ACCEPTABLE)
+				.then(res => {
+					expect(res.body).to.have.a.property('success');
+					expect(res.body).to.have.a.property('message');
+					const { message } = res.body;
+					const { success } = res.body;
+					expect(success).to.be.equal(false);
+					expect(message).to.include('This email is in use');
+				});
 
-		// it('should report error when the email provided is not valid', () => {
-		// 	user.email = 'this_is_not_an_email';
-		// 	return request(app)
-		// 		.post('/v1/auth/register')
-		// 		.send(user)
-		// 		.expect(httpStatus.BAD_REQUEST)
-		// 		.then(res => {
-		// 			const { field } = res.body.errors[0];
-		// 			const { location } = res.body.errors[0];
-		// 			const { messages } = res.body.errors[0];
-		// 			expect(field).to.be.equal('email');
-		// 			expect(location).to.be.equal('body');
-		// 			expect(messages).to.include('"email" must be a valid email');
-		// 		});
-		// });
+			done();
+		});
 
-		// it('should report error when email and password are not provided', () => {
-		// 	return request(app)
-		// 		.post('/v1/auth/register')
-		// 		.send({})
-		// 		.expect(httpStatus.BAD_REQUEST)
-		// 		.then(res => {
-		// 			const { field } = res.body.errors[0];
-		// 			const { location } = res.body.errors[0];
-		// 			const { messages } = res.body.errors[0];
-		// 			expect(field).to.be.equal('email');
-		// 			expect(location).to.be.equal('body');
-		// 			expect(messages).to.include('"email" is required');
-		// 		});
-		// });
+		it('should report error when the email provided is not valid', done => {
+			user.email = 'this_is_not_an_email';
+			request(app)
+				.post('/api/v1/auth/register')
+				.send(user)
+				.expect(httpStatus.UNPROCESSABLE_ENTITY)
+				.then(res => {
+					expect(res.body).to.have.a.property('errors');
+					const { errors } = res.body;
+					expect(errors).length.greaterThan(0);
+					expect(errors[0].message).to.include('"email" must be a valid email');
+				});
+
+			done();
+		});
+
+		it('should report error when email and password are not provided', done => {
+			request(app)
+				.post('/api/v1/auth/register')
+				.send({})
+				.expect(httpStatus.UNPROCESSABLE_ENTITY)
+				.then(res => {
+					expect(res.body).to.have.a.property('errors');
+					const { errors } = res.body;
+					expect(errors).length.greaterThan(0);
+					expect(messages).to.include('"email" is required');
+				});
+
+			done();
+		});
 	});
 
 	// describe('POST /v1/auth/login', () => {
