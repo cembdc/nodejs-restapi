@@ -1,0 +1,3 @@
+{
+	"*.js": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts"
+}
