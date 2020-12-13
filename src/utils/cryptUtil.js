@@ -12,17 +12,11 @@ const encode = data => {
 	return crypted;
 };
 
-const generateSalt = () => {
-	return crypto.randomBytes(10).toString('hex') + encode(config.token_config.secret);
-};
+const generateSalt = () => crypto.randomBytes(10).toString('hex') + encode(config.token_config.secret);
 
-const hash = (password, salt) => {
-	return crypto.pbkdf2Sync(password, salt, saltRounds, 32, `sha512`).toString(`hex`);
-};
+const hash = (password, salt) => crypto.pbkdf2Sync(password, salt, saltRounds, 32, `sha512`).toString(`hex`);
 
-const verifyHash = data => {
-	return data.hashPassword === this.hash(data.password, data.salt);
-};
+const verifyHash = data => data.hashPassword === this.hash(data.password, data.salt);
 
 const createToken = payload => {
 	const token = jwt.sign(payload, config.token_config.secret, {
