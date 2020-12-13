@@ -1,7 +1,8 @@
 {
 	"hooks": {
 		"post-checkout": "npm",
-		"pre-commit": "lint-staged",
-		"post-commit": "git status"
+		"pre-commit": "npm run prettier-format && npm run lint",
+		"post-commit": "git status",
+		"pre-push": "npm run test"
 	}
 }
