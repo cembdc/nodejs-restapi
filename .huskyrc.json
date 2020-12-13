@@ -1,7 +1,6 @@
 {
 	"hooks": {
 		"post-checkout": "npm",
-		"pre-commit": "npm run prettier-format && npm run lint",
-		"post-commit": "npm run test"
+		"pre-commit": "npm run prettier-format && npm run lint && npm run test"
 	}
 }
