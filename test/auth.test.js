@@ -125,7 +125,7 @@ describe('Authentication API', () => {
 			request(app)
 				.post('/api/v1/auth/login')
 				.send(loginUser)
-				.expect(httpStatus.OK)
+				.expect(httpStatus.BAD_GATEWAY)
 				.then(res => {
 					expect(res.body).to.have.a.property('success');
 					expect(res.body).to.have.a.property('message');
