@@ -3,6 +3,7 @@ const httpStatus = require('http-status');
 const { expect } = require('chai');
 const app = require('../src/loaders/express');
 const userRepository = require('../src/repository/userRepository');
+const { stateEnums } = require('../src/model/enums/enums.index');
 const { config } = require('../src/config/config');
 const setupTestDBAndConnection = require('./utils/setupTestDBAndConnection');
 
@@ -52,12 +53,6 @@ describe('Authentication API', () => {
 					const { success } = res.body;
 					expect(success).to.be.equal(true);
 					expect(message).to.include('Succesfull');
-					// server.close();
-
-					// expect(res.body).to.have.a.property('error');
-					// expect(res.body).to.have.a.property('message');
-					// expect(res.body).to.have.a.property('data');
-					// expect(res.body.user).to.include(user);
 				});
 
 			done();
@@ -105,71 +100,94 @@ describe('Authentication API', () => {
 					expect(res.body).to.have.a.property('errors');
 					const { errors } = res.body;
 					expect(errors).length.greaterThan(0);
-					expect(messages).to.include('"email" is required');
+					expect(errors[0].message).to.include('"email" is required');
 				});
 
 			done();
 		});
 	});
 
-	// describe('POST /v1/auth/login', () => {
-	// 	it('should return an accessToken and a refreshToken when email and password matches', () => {
-	// 		return request(app)
-	// 			.post('/v1/auth/login')
-	// 			.send(dbUser)
-	// 			.expect(httpStatus.OK)
-	// 			.then(res => {
-	// 				delete dbUser.password;
-	// 				expect(res.body.token).to.have.a.property('accessToken');
-	// 				expect(res.body.token).to.have.a.property('refreshToken');
-	// 				expect(res.body.token).to.have.a.property('expiresIn');
-	// 				expect(res.body.user).to.include(dbUser);
-	// 			});
-	// 	});
+	describe('POST /api/v1/auth/login', () => {
+		let loginUser;
 
-	// 	it('should report error when email and password are not provided', () => {
-	// 		return request(app)
-	// 			.post('/v1/auth/login')
-	// 			.send({})
-	// 			.expect(httpStatus.BAD_REQUEST)
-	// 			.then(res => {
-	// 				const { field } = res.body.errors[0];
-	// 				const { location } = res.body.errors[0];
-	// 				const { messages } = res.body.errors[0];
-	// 				expect(field).to.be.equal('email');
-	// 				expect(location).to.be.equal('body');
-	// 				expect(messages).to.include('"email" is required');
-	// 			});
-	// 	});
+		beforeEach(async () => {
+			loginUser = {
+				email: 'branstark@gmail.com',
+				password: '123ljkD3ed'
+			};
 
-	// 	it('should report error when the email provided is not valid', () => {
-	// 		user.email = 'this_is_not_an_email';
-	// 		return request(app)
-	// 			.post('/v1/auth/login')
-	// 			.send(user)
-	// 			.expect(httpStatus.BAD_REQUEST)
-	// 			.then(res => {
-	// 				const { field } = res.body.errors[0];
-	// 				const { location } = res.body.errors[0];
-	// 				const { messages } = res.body.errors[0];
-	// 				expect(field).to.be.equal('email');
-	// 				expect(location).to.be.equal('body');
-	// 				expect(messages).to.include('"email" must be a valid email');
-	// 			});
-	// 	});
+			const updateStateUser = await userRepository.getUserByEmail(loginUser.email);
+			updateStateUser.state = stateEnums.UserState.Active;
+			await userRepository.updateUser(updateStateUser);
+		});
 
-	// 	it("should report error when email and password don't match", () => {
-	// 		dbUser.password = 'xxx';
-	// 		return request(app)
-	// 			.post('/v1/auth/login')
-	// 			.send(dbUser)
-	// 			.expect(httpStatus.UNAUTHORIZED)
-	// 			.then(res => {
-	// 				const { code } = res.body;
-	// 				const { message } = res.body;
-	// 				expect(code).to.be.equal(401);
-	// 				expect(message).to.be.equal('Incorrect email or password');
-	// 			});
-	// 	});
-	// });
+		it('should return an token when email and password matches', done => {
+			request(app)
+				.post('/api/v1/auth/login')
+				.send(loginUser)
+				.expect(httpStatus.OK)
+				.then(res => {
+					expect(res.body).to.have.a.property('success');
+					expect(res.body).to.have.a.property('message');
+					expect(res.body).to.have.a.property('data');
+					expect(res.body.data).to.have.a.property('token');
+					const { message } = res.body;
+					const { success } = res.body;
+					const { data } = res.body;
+					expect(success).to.be.equal(true);
+					expect(message).to.include('Succesfull');
+					expect(data).to.not.equal(null);
+					expect(data).to.not.equal(undefined);
+					expect(data.token).to.not.equal(null);
+					expect(data.token).to.not.equal(undefined);
+				});
+
+			done();
+		});
+
+		// 	it('should report error when email and password are not provided', () => {
+		// 		return request(app)
+		// 			.post('/v1/auth/login')
+		// 			.send({})
+		// 			.expect(httpStatus.BAD_REQUEST)
+		// 			.then(res => {
+		// 				const { field } = res.body.errors[0];
+		// 				const { location } = res.body.errors[0];
+		// 				const { messages } = res.body.errors[0];
+		// 				expect(field).to.be.equal('email');
+		// 				expect(location).to.be.equal('body');
+		// 				expect(messages).to.include('"email" is required');
+		// 			});
+		// 	});
+
+		// 	it('should report error when the email provided is not valid', () => {
+		// 		user.email = 'this_is_not_an_email';
+		// 		return request(app)
+		// 			.post('/v1/auth/login')
+		// 			.send(user)
+		// 			.expect(httpStatus.BAD_REQUEST)
+		// 			.then(res => {
+		// 				const { field } = res.body.errors[0];
+		// 				const { location } = res.body.errors[0];
+		// 				const { messages } = res.body.errors[0];
+		// 				expect(field).to.be.equal('email');
+		// 				expect(location).to.be.equal('body');
+		// 				expect(messages).to.include('"email" must be a valid email');
+		// 			});
+		// 	});
+
+		// 	it("should report error when email and password don't match", () => {
+		// 		dbUser.password = 'xxx';
+		// 		return request(app)
+		// 			.post('/v1/auth/login')
+		// 			.send(dbUser)
+		// 			.expect(httpStatus.UNAUTHORIZED)
+		// 			.then(res => {
+		// 				const { code } = res.body;
+		// 				const { message } = res.body;
+		// 				expect(code).to.be.equal(401);
+		// 				expect(message).to.be.equal('Incorrect email or password');
+		// 			});
+		// 	});
+	});
 });

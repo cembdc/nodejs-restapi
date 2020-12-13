@@ -82,23 +82,38 @@ exports.updateUser = async user => {
  */
 exports.authenticateUser = async (email, password) => {
 	try {
-		const hashedPassword = cryptUtil.encode(password);
-		const user = await userRepository.getUserByLoginInfo(email, hashedPassword);
+		const user = await userRepository.getUserByEmail(email);
 
 		if (!user || user.state !== stateEnums.UserState.Active) return { success: false };
 
-		const token = jwt.sign(
-			{
-				userId: user.id,
-				email: user.email
-			},
-			config.token_config.secret,
-			{
-				expiresIn: config.token_config.expiresIn
-			}
-		);
+		const pswDto = {
+			hashPassword: user.password,
+			salt: user.salt,
+			password
+		};
 
-		return { success: true, data: token };
+		const isMatch = cryptUtil.verifyHash(pswDto);
+
+		if (!isMatch) return { success: false };
+
+		const token = cryptUtil.createToken({
+			userId: user.id,
+			name: user.name,
+			email: user.email,
+			isLoggedIn: true
+		});
+		user.lastLoginDateTime = new Date();
+
+		await userRepository.updateUser(user);
+
+		return {
+			success: true,
+			data: {
+				name: user.name,
+				email: user.email,
+				token
+			}
+		};
 	} catch (error) {
 		throw { success: false, error };
 	}

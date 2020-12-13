@@ -39,7 +39,13 @@ const UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	lastLoginDateTime: {
+		type: Date
+	},
 	verificationCode: {
+		type: String
+	},
+	salt: {
 		type: String
 	}
 });
@@ -49,9 +55,12 @@ UserSchema.plugin(toJSON);
 UserSchema.pre('save', function(next) {
 	const user = this;
 	if ((this.isModified('password') || this.isNew) && user.password) {
-		const hash = cryptUtil.encode(user.password);
+		const salt = cryptUtil.generateSalt();
+		const hash = cryptUtil.hash(user.password, salt);
 
 		user.password = hash;
+		user.salt = salt;
+
 		next();
 	} else {
 		return next();

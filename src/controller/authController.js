@@ -9,7 +9,7 @@ exports.login = async (req, res, next) => {
 			res.apiResponse = {
 				status: Status.NOT_FOUND,
 				success: result.success,
-				message: 'User not found, please check your credentials.'
+				message: 'Wrong email or password'
 			};
 		} else {
 			res.apiResponse = {
