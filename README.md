@@ -52,9 +52,9 @@ test/
 -   **API documentation**: //TODO: swagger
 -   **Dependency management**: with [Npm](https://www.npmjs.com/)
 -   **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv)
--   **Security**: //TODO: set security HTTP headers using [helmet](https://helmetjs.github.io)
+-   **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
 -   **Santizing**: sanitize request data against xss and query injection
--   **CORS**: //TODO: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
+-   **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 -   **Compression**: //TODO: gzip compression with [compression](https://github.com/expressjs/compression)
 -   **CI**: continuous integration with [Travis CI](https://travis-ci.org)
 -   **Docker support**

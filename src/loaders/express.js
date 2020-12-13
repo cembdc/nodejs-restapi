@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 const bodyparser = require('body-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const routes = require('../routes/routes');
@@ -18,6 +19,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json({ limit: '10mb' }));
 app.use(mongoSanitize());
 app.use(helmet());
+app.use(cors());
 
 routes.assignRoutes(app);
 
