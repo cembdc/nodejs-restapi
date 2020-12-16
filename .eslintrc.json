@@ -1,6 +1,9 @@
 {
-	"extends": ["airbnb", "prettier"],
-	"plugins": ["prettier"],
+	"extends": ["airbnb-base","plugin:security/recommended", "plugin:prettier/recommended"],
+	"plugins": ["security","prettier"],
+	"parserOptions": {
+		"ecmaVersion": 2018
+	  },
 	"rules": {
 		"prettier/prettier": "error",
 		"prefer-template": "off",

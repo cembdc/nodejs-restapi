@@ -1,8 +1,6 @@
-const jwt = require('jsonwebtoken');
 const { userRepository } = require('../repository/repository.index');
 const { cryptUtil } = require('../utils/utils.index');
 const { stateEnums } = require('../model/enums/enums.index');
-const { config } = require('../config/config');
 const emailService = require('./emailService');
 
 /**
