@@ -14,7 +14,7 @@
 		"prettier-format": "prettier --config .prettierrc src/**/*.js --write",
 		"lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
 		"test": "nyc --reporter=html --reporter=text mocha --timeout 10000npm --exit",
-		"test-with-coverage": "nyc report --reporter=text-lcov | coveralls"
+		"test:coverage": "nyc report --reporter=text-lcov | coveralls"
 	},
 	"dependencies": {
 		"app-root-path": "^2.2.1",

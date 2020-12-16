@@ -19,4 +19,4 @@ script:
     - echo '*******Build Starts*******'
     - npm run lint
     - npm run test
-after_success: npm run test-with-coverage
+after_success: npm run test:coverage

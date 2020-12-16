@@ -28,7 +28,7 @@
 #             - run: npm run test
 
 #             # finally run the tests
-#             # - run: npm run test-with-coverage
+#             # - run: npm run test:coverage
 
 #             # Save coverage report in Coveralls
 #             - name: Coveralls
