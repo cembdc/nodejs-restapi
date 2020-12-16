@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/CemBdc/nodejs-restapi.svg?branch=master)](https://travis-ci.com/CemBdc/nodejs-restapi)
 [![Coverage Status](https://coveralls.io/repos/github/CemBdc/nodejs-restapi/badge.svg?branch=master)](https://coveralls.io/github/CemBdc/nodejs-restapi?branch=master)
 
-Boilerplate for API backends with Node.js and Express.
+A Boilerplate/Starter Project for building RESTful APIs using Node.js, Express, and Mongoose.
 
 ## Directory structure
 
@@ -63,3 +63,67 @@ test/
 -   **Git hooks**: with [husky](https://github.com/typicode/husky)
 -   **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
 -   **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
+
+## Getting Started
+
+### Installation
+
+Clone the repo:
+
+```bash
+git clone https://github.com/CemBdc/nodejs-restapi.git
+cd nodejs-restapi
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Set the environment variables:
+
+```bash
+cp .env.example .env
+
+# open .env and modify the environment variables (if needed)
+```
+
+## Commands
+
+### Running locally:
+
+```bash
+npm run start
+```
+
+### Lint
+
+```bash
+# lint code with ESLint
+npm run lint
+```
+
+### Test
+
+```bash
+# run all tests with Mocha
+npm run test
+
+# run test coverage
+npm run test:coverage
+```
+
+## Contributing
+
+Contributions are more than welcome! Please check out the [contributing guide](CONTRIBUTING.md).
+
+## Inspirations
+
+- [danielfsousa/express-rest-es2017-boilerplate](https://github.com/danielfsousa/express-rest-es2017-boilerplate)
+- [madhums/node-express-mongoose](https://github.com/madhums/node-express-mongoose)
+- [kunalkapadia/express-mongoose-es6-rest-api](https://github.com/kunalkapadia/express-mongoose-es6-rest-api)
+
+## License
+
+[MIT](LICENSE)
