@@ -4,9 +4,6 @@ dotenv.config();
 
 exports.config = {
 	db_config: {
-		poolsize: process.env.DB_POOLSIZE,
-		auto_reconnect: process.env.DB_AUTO_CONNECT,
-		authdb: process.env.DB_AUTHDB,
 		connStr: process.env.DB_CONNECTION_STRING
 	},
 	api_config: {
