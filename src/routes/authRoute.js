@@ -43,4 +43,14 @@ exports.assignRoutes = app => {
 		authController.register,
 		apiResponse.send
 	);
+
+	/**
+	 * Verify Register
+	 */
+	app.post(
+		requestUtil.getUrlPrefix('auth/verifyregister'),
+		validate(authValidation.verifyRegister),
+		authController.verifyRegister,
+		apiResponse.send
+	);
 };

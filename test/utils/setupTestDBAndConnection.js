@@ -19,14 +19,19 @@ const setupTestDBAndConnection = () => {
 		// );
 
 		// return server;
-	});
 
-	beforeEach(async () => {
 		await Promise.all(
 			Object.values(mongoose.connection.collections).map(async collection => collection.deleteMany())
 		);
 		console.log(`%cMongo collections content cleaned`, 'color: green');
 	});
+
+	// beforeEach(async () => {
+	// 	await Promise.all(
+	// 		Object.values(mongoose.connection.collections).map(async collection => collection.deleteMany())
+	// 	);
+	// 	console.log(`%cMongo collections content cleaned`, 'color: green');
+	// });
 
 	after(async () => {
 		await mongoose.disconnect();

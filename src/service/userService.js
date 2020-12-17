@@ -183,12 +183,18 @@ exports.registerUser = async user => {
 		if (existUser) return { success: false, error: 'This email is in use' };
 
 		user.verificationCode = cryptUtil.encode(user.email + Date.now());
-		await userRepository.createUser(user);
+		const newUser = await userRepository.createUser(user);
+
+		const token = cryptUtil.createToken({
+			userId: newUser.id,
+			isLoggedIn: false
+		});
 
 		emailService.sendAccountVerificationMail({
 			toAddress: user.email,
 			name: user.name,
-			code: user.verificationCode
+			code: user.verificationCode,
+			token
 		});
 
 		return { success: true };
@@ -199,17 +205,27 @@ exports.registerUser = async user => {
 
 /**
  * @description Verify user register
+ * @param token {property} Token
  * @param code {property} Code
  * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
  * {success: false, error: any} or {success: true}
  */
-exports.verifyRegister = async code => {
+exports.verifyRegister = async (token, code) => {
 	try {
-		const user = await userRepository.getUserByVerificationCode(code);
+		const decodedToken = cryptUtil.decodeToken(token);
 
-		if (!user) return { success: false };
+		const user = await userRepository.getUser(decodedToken.userId);
+
+		if (
+			!user ||
+			!user.verificationCode ||
+			user.verificationCode !== code ||
+			user.state !== stateEnums.UserState.NotVerified
+		)
+			return { success: false };
 
 		user.verificationCode = null;
+		user.state = stateEnums.UserState.Active;
 
 		userRepository.updateUser(user);
 

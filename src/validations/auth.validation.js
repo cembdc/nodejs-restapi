@@ -45,9 +45,17 @@ const register = {
 	})
 };
 
+const verifyRegister = {
+	body: Joi.object().keys({
+		token: Joi.string().required(),
+		code: Joi.string().required()
+	})
+};
+
 module.exports = {
 	register,
 	login,
 	forgotPassword,
-	resetPassword
+	resetPassword,
+	verifyRegister
 };

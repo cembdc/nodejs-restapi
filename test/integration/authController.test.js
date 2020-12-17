@@ -3,8 +3,8 @@ const httpStatus = require('http-status');
 const { expect } = require('chai');
 const app = require('../../src/loaders/express');
 const userRepository = require('../../src/repository/userRepository');
-const { stateEnums } = require('../../src/model/enums/enums.index');
 const { config } = require('../../src/config/config');
+const { cryptUtil } = require('../../src/utils/utils.index');
 const setupTestDBAndConnection = require('../utils/setupTestDBAndConnection');
 
 setupTestDBAndConnection();
@@ -17,26 +17,28 @@ app.listen(config.api_config.api_port, () =>
 );
 
 describe('Authentication API', () => {
-	let dbUser;
-	let user;
-
-	beforeEach(async () => {
-		dbUser = {
-			name: 'Bran Stark',
-			email: 'branstark@gmail.com',
-			password: '123ljkD3ed'
-		};
-
-		user = {
-			email: 'cembdci@gmail.com',
-			password: '123ljkD3ed',
-			name: 'Cem Bideci'
-		};
-
-		await userRepository.createUser(dbUser);
-	});
-
 	describe('POST /api/v1/auth/register', () => {
+		let user;
+
+		before(async () => {
+			user = {
+				email: 'cembdci@gmail.com',
+				password: '123ljkD3ed',
+				name: 'Cem Bideci'
+			};
+		});
+
+		afterEach(async () => {
+			const existUser = await userRepository.getUserByEmail(user.email);
+			const token = cryptUtil.createToken({
+				userId: existUser.id,
+				isLoggedIn: false
+			});
+
+			user.verificationCode = existUser.verificationCode;
+			user.token = token;
+		});
+
 		it('should register a new user when request is ok', done => {
 			request(app)
 				.post('/api/v1/auth/register')
@@ -51,6 +53,34 @@ describe('Authentication API', () => {
 					expect(message).to.include('Succesfull');
 					done(err);
 				});
+		});
+
+		it('should verify register a new user when request is ok', done => {
+			request(app)
+				.post('/api/v1/auth/verifyregister')
+				.send({ token: user.token, code: user.verificationCode })
+				.expect(httpStatus.OK)
+				.end((err, res) => {
+					expect(res.body).to.have.a.property('success');
+					expect(res.body).to.have.a.property('message');
+					const { message } = res.body;
+					const { success } = res.body;
+					expect(success).to.be.equal(true);
+					expect(message).to.include('Succesfull');
+					done(err);
+				});
+		});
+	});
+
+	describe('POST /api/v1/auth/register Invalid Inputs', () => {
+		let dbUser;
+
+		before(async () => {
+			dbUser = {
+				email: 'cembdci@gmail.com',
+				password: '123ljkD3ed',
+				name: 'Cem Bideci'
+			};
 		});
 
 		it('should report error when email already exists', done => {
@@ -70,10 +100,10 @@ describe('Authentication API', () => {
 		});
 
 		it('should report error when the email provided is not valid', done => {
-			user.email = 'this_is_not_an_email';
+			dbUser.email = 'this_is_not_an_email';
 			request(app)
 				.post('/api/v1/auth/register')
-				.send(user)
+				.send(dbUser)
 				.expect(httpStatus.UNPROCESSABLE_ENTITY)
 				.end((err, res) => {
 					expect(res.body).to.have.a.property('errors');
@@ -104,13 +134,9 @@ describe('Authentication API', () => {
 
 		beforeEach(async () => {
 			loginUser = {
-				email: 'branstark@gmail.com',
+				email: 'cembdci@gmail.com',
 				password: '123ljkD3ed'
 			};
-
-			const updateStateUser = await userRepository.getUserByEmail(loginUser.email);
-			updateStateUser.state = stateEnums.UserState.Active;
-			await userRepository.updateUser(updateStateUser);
 		});
 
 		it('should return an token when email and password matches', done => {
@@ -134,6 +160,16 @@ describe('Authentication API', () => {
 					expect(data.token).to.not.equal(undefined);
 					done(err);
 				});
+		});
+	});
+	describe('POST /api/v1/auth/login Invalid Inputs', () => {
+		let loginUser;
+
+		beforeEach(async () => {
+			loginUser = {
+				email: 'branstark@gmail.com',
+				password: '123ljkD3ed'
+			};
 		});
 
 		it('should report error when email and password are not provided', done => {

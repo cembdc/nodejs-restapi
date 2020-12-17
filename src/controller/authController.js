@@ -128,9 +128,9 @@ exports.register = async (req, res, next) => {
 
 exports.verifyRegister = async (req, res, next) => {
 	try {
-		const { code } = req.body;
+		const { token, code } = req.body;
 
-		const result = await userService.verifyRegister(code);
+		const result = await userService.verifyRegister(token, code);
 
 		if (!result.success) {
 			res.apiResponse = {

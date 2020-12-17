@@ -35,7 +35,7 @@ exports.sendForgotPasswordMail = async mailOptions => {
  */
 exports.sendAccountVerificationMail = async mailOptions => {
 	try {
-		const url = `${config.client_config.host}${config.client_config.accountVerification}?code=${mailOptions.code}`;
+		const url = `${config.client_config.host}${config.client_config.accountVerification}?c=${mailOptions.code}&t=${mailOptions.token}`;
 
 		const mailDto = {
 			to: mailOptions.toAddress,
