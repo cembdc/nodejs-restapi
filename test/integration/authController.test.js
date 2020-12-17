@@ -1,11 +1,11 @@
 const request = require('supertest');
 const httpStatus = require('http-status');
 const { expect } = require('chai');
-const app = require('../src/loaders/express');
-const userRepository = require('../src/repository/userRepository');
-const { stateEnums } = require('../src/model/enums/enums.index');
-const { config } = require('../src/config/config');
-const setupTestDBAndConnection = require('./utils/setupTestDBAndConnection');
+const app = require('../../src/loaders/express');
+const userRepository = require('../../src/repository/userRepository');
+const { stateEnums } = require('../../src/model/enums/enums.index');
+const { config } = require('../../src/config/config');
+const setupTestDBAndConnection = require('../utils/setupTestDBAndConnection');
 
 setupTestDBAndConnection();
 
