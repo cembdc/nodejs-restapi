@@ -13,7 +13,7 @@
 		"start": "src/server.js",
 		"prettier-format": "prettier --config .prettierrc src/**/*.js --write",
 		"lint": "eslint ./src/ --ignore-path .gitignore --ignore-pattern internals/scripts",
-		"test": "nyc --reporter=html --reporter=text mocha --timeout 10000npm --exit",
+		"test": "nyc --reporter=html --reporter=text mocha test/**/*.test.js --timeout 10000npm --exit",
 		"test:coverage": "nyc report --reporter=text-lcov | coveralls"
 	},
 	"dependencies": {
