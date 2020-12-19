@@ -65,9 +65,9 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.renewPassword = async (req, res, next) => {
 	try {
-		const { password, code } = req.body;
+		const { password, code, token } = req.body;
 
-		const result = await userService.renewPassword(code, password);
+		const result = await userService.renewPassword(code, password, token);
 
 		if (!result.success) {
 			res.apiResponse = {

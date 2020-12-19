@@ -153,16 +153,19 @@ exports.forgotPasswordRequest = async email => {
  * @description Renew user password
  * @param code {property} Code
  * @param password {property} Password
+ * @param token {property} Token
  * @returns {Promise<{success: boolean, error: *} | {success: boolean}>}
  * {success: false, error: any} or {success: true}
  */
-exports.renewPassword = async (code, password) => {
+exports.renewPassword = async (code, password, token) => {
 	try {
-		const user = await userRepository.getUserByVerificationCode(code);
+		const decodedToken = cryptUtil.decodeToken(token);
 
-		if (!user) return { success: false };
+		const user = await userRepository.getUser(decodedToken.userId);
 
-		user.password = cryptUtil.encode(password);
+		if (!user || !user.verificationCode || user.verificationCode !== code) return { success: false };
+
+		user.password = cryptUtil.hash(password, user.salt);
 		user.verificationCode = null;
 
 		userRepository.updateUser(user);
