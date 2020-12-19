@@ -32,7 +32,19 @@ exports.assignRoutes = app => {
 		requestUtil.getUrlPrefix('user/:id'),
 		validate(userValidation.updateUser),
 		authorizer.checkAuth,
-		userController.updateUser
+		userController.updateUser,
+		apiResponse.send
+	);
+
+	/**
+	 * Create User
+	 */
+	app.post(
+		requestUtil.getUrlPrefix('user'),
+		validate(userValidation.createUser),
+		authorizer.checkAuth,
+		userController.createUser,
+		apiResponse.send
 	);
 
 	/**

@@ -9,12 +9,12 @@ const setupTestDBAndConnection = require('../utils/setupTestDBAndConnection');
 
 setupTestDBAndConnection();
 
-app.listen(config.api_config.api_port, () =>
-	console.log(
-		`%cAPI Running on: ${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`,
-		'color: green'
-	)
-);
+// app.listen(config.api_config.api_port, () =>
+// 	console.log(
+// 		`%cAPI Running on: ${config.api_config.api_host}:${config.api_config.api_port}${config.api_config.api_base_url}`,
+// 		'color: green'
+// 	)
+// );
 
 describe('Authentication API', () => {
 	describe('POST /api/v1/auth/register', () => {

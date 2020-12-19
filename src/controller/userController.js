@@ -54,13 +54,19 @@ exports.createUser = async (req, res, next) => {
 		const { name, email, password } = req.body;
 		const result = await userService.createUser({ name, email, password });
 
-		res.apiResponse = {
-			status: Status.OK,
-			success: result.success,
-			error: result.error,
-			data: result.data,
-			message: 'Succesfull'
-		};
+		if (!result.success) {
+			res.apiResponse = {
+				status: Status.NOT_ACCEPTABLE,
+				success: result.success,
+				message: result.error
+			};
+		} else {
+			res.apiResponse = {
+				status: Status.OK,
+				success: result.success,
+				message: 'Succesfull'
+			};
+		}
 	} catch (error) {
 		res.apiResponse = {
 			status: Status.BAD_REQUEST,

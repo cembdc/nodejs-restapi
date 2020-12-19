@@ -45,6 +45,10 @@ exports.getUser = async id => {
  */
 exports.createUser = async user => {
 	try {
+		const existUser = await userRepository.getUserByEmail(user.email);
+
+		if (existUser) return { success: false, error: 'This email is in use' };
+
 		await userRepository.createUser(user);
 
 		return { success: true };
